@@ -1,7 +1,8 @@
+import Sidebar from './components/Sidebar.jsx'
 function App() {
   return (
     <>
-      <h1>hello</h1>
+      <Sidebar />
     </>
   )
 }
