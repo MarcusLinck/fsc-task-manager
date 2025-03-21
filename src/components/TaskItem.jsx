@@ -1,7 +1,7 @@
 import {
   CheckIcon,
-  LoaderIcon,
   DetailsIcon,
+  LoaderIcon,
   TrashIcon,
 } from '../assets/icons/index.js'
 import Button from './Button.jsx'
