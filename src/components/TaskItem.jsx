@@ -1,6 +1,12 @@
-import { CheckIcon, LoaderIcon, DetailsIcon } from '../assets/icons/index.js'
+import {
+  CheckIcon,
+  LoaderIcon,
+  DetailsIcon,
+  TrashIcon,
+} from '../assets/icons/index.js'
+import Button from './Button.jsx'
 
-const TaskItem = ({ task, handleTaskCheckboxClick }) => {
+const TaskItem = ({ task, handleTaskCheckboxClick, handleTaskDeleteClick }) => {
   const getVariantClass = () => {
     if (task.status === 'in_progress') {
       return 'bg-[#FFAA04] bg-opacity-10 text-[#FFAA04]'
@@ -35,9 +41,14 @@ const TaskItem = ({ task, handleTaskCheckboxClick }) => {
         </label>
         {task.title}
       </div>
-      <a href="#" className="transition hover:opacity-75">
-        <DetailsIcon />
-      </a>
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" onClick={() => handleTaskDeleteClick(task.id)}>
+          <TrashIcon className="text-[#9A9C9F]" />
+        </Button>
+        <a href="#" className="transition hover:opacity-75">
+          <DetailsIcon />
+        </a>
+      </div>
     </div>
   )
 }
