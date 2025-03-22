@@ -1,12 +1,13 @@
 import InpuLabel from './InpuLabel.jsx'
 
-const Select = () => {
+const Select = (props) => {
   return (
     <div className="flex flex-col space-y-1 text-left">
       <InpuLabel htmlFor="time">Horário</InpuLabel>
       <select
         id="time"
         className="rounded-lg border border-solid border-[#ECECEC] px-4 py-3 outline-[#00ADB5] placeholder:text-sm placeholder:text-[#9A9C9F]"
+        {...props}
       >
         <option value="morning">Manhã</option>
         <option value="afternoon">Tarde</option>

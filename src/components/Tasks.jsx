@@ -26,6 +26,11 @@ const Tasks = () => {
     setAddTaskDialogIsOpen(false)
   }
 
+  const handleAddTask = (newTask) => {
+    setTasks([...tasks, newTask])
+    toast.success('Tarefa adicionada com sucesso!')
+  }
+
   const handleTaskCheckboxClick = (taskId) => {
     console.log('taskId', taskId)
     const newTasks = tasks.map((task) => {
@@ -93,6 +98,7 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={addTaskDialogIsOpen}
             handleClose={handleDialogClose}
+            handleAddTask={handleAddTask}
           />
         </div>
       </div>
