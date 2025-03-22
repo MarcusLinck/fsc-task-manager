@@ -35,16 +35,16 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
               <form className="flex w-[336px] flex-col space-y-4">
                 <Input
                   id="title"
-                  label="Título"
                   placeholder="Insira o título da tarefa"
+                  label="Título"
                 />
 
                 <Select />
 
                 <Input
                   id="description"
-                  label="Descrição"
                   placeholder="Descreva a tarefa"
+                  label="Descrição"
                 />
 
                 <div className="flex gap-3">
