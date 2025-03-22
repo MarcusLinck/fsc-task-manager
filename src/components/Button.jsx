@@ -28,14 +28,12 @@ const Button = ({
     }
   }
   return (
-    <div>
-      <button
-        className={`flex items-center justify-center gap-2 rounded-md px-3 font-semibold transition hover:opacity-70 ${getVariantClass()} ${getSizeClasses()} ${className}`}
-        {...rest}
-      >
-        {children}
-      </button>
-    </div>
+    <button
+      className={`flex items-center justify-center gap-2 rounded-md px-3 font-semibold transition hover:opacity-70 ${getVariantClass()} ${getSizeClasses()} ${className}`}
+      {...rest}
+    >
+      {children}
+    </button>
   )
 }
 
