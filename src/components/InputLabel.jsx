@@ -1,4 +1,4 @@
-const InpuLabel = (props) => {
+const InputLabel = (props) => {
   return (
     <label className="text-sm font-semibold text-[#35383E]" {...props}>
       {props.children}
@@ -6,4 +6,4 @@ const InpuLabel = (props) => {
   )
 }
 
-export default InpuLabel
+export default InputLabel

@@ -1,23 +1,29 @@
-import InpuLabel from './InpuLabel.jsx'
+import { forwardRef } from 'react'
 
-const Select = (props) => {
+import InputLabel from './InputLabel.jsx'
+
+const Select = forwardRef((props, ref) => {
   return (
-    <div className="flex flex-col space-y-1 text-left">
-      <InpuLabel htmlFor="time">Horário</InpuLabel>
+    <div className="flex flex-col gap-1 text-left">
+      <InputLabel htmlFor="time">Horário</InputLabel>
+
       <select
         id="time"
-        className="rounded-lg border border-solid border-[#ECECEC] px-4 py-3 outline-[#00ADB5] placeholder:text-sm placeholder:text-[#9A9C9F]"
+        className="border-brand-border outline-brand-primary placeholder:text-brand-text-gray rounded-lg border border-solid px-4 py-3 placeholder:text-sm"
         {...props}
+        ref={ref}
       >
         <option value="morning">Manhã</option>
         <option value="afternoon">Tarde</option>
         <option value="evening">Noite</option>
       </select>
+
       {props.errorMessage && (
         <p className="text-left text-xs text-red-500">{props.errorMessage}</p>
       )}
     </div>
   )
-}
+})
 
+Select.displayName = 'TimeSelect'
 export default Select
