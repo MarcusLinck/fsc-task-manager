@@ -1,6 +1,6 @@
 import './AddTaskDialog.css'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -12,10 +12,18 @@ import Select from './Select.jsx'
 
 const AddTaskDialog = ({ isOpen, handleClose, handleAddTask }) => {
   const [time, setTime] = useState('')
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState('morning')
   const [description, setDescription] = useState('')
 
   const nodeRef = useRef()
+
+  useEffect(() => {
+    if (!isOpen) {
+      setTitle('')
+      setTime('')
+      setDescription('')
+    }
+  }, [isOpen])
 
   const handleSaveClick = () => {
     handleAddTask({
@@ -25,6 +33,7 @@ const AddTaskDialog = ({ isOpen, handleClose, handleAddTask }) => {
       description: document.getElementById('description').value,
       status: 'not_started',
     })
+
     handleClose()
   }
 
