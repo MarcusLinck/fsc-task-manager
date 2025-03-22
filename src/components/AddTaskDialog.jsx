@@ -14,18 +14,47 @@ const AddTaskDialog = ({ isOpen, handleClose, handleAddTask }) => {
   const [time, setTime] = useState('')
   const [title, setTitle] = useState('morning')
   const [description, setDescription] = useState('')
+  const [errors, setError] = useState([])
 
   const nodeRef = useRef()
 
   useEffect(() => {
     if (!isOpen) {
       setTitle('')
-      setTime('')
+      setTime('morning')
       setDescription('')
     }
   }, [isOpen])
 
   const handleSaveClick = () => {
+    const newErrors = []
+    if (!title.trim()) {
+      newErrors.push({
+        inputName: 'title',
+        message: 'O título é obrigatório',
+      })
+    }
+
+    if (!time.trim()) {
+      newErrors.push({
+        inputName: 'time',
+        message: 'O horário é obrigatório',
+      })
+    }
+
+    if (!description.trim()) {
+      newErrors.push({
+        inputName: 'description',
+        message: 'A descrição é obrigatória',
+      })
+    }
+
+    setError(newErrors)
+
+    if (newErrors.length > 0) {
+      return
+    }
+
     handleAddTask({
       id: v4,
       title: document.getElementById('title').value,
@@ -36,6 +65,12 @@ const AddTaskDialog = ({ isOpen, handleClose, handleAddTask }) => {
 
     handleClose()
   }
+
+  const titleError = errors.find((error) => error.inputName === 'title')
+  const descriptionError = errors.find(
+    (error) => error.inputName === 'description'
+  )
+  const timeError = errors.find((error) => error.inputName === 'time')
 
   return (
     <CSSTransition
@@ -65,11 +100,13 @@ const AddTaskDialog = ({ isOpen, handleClose, handleAddTask }) => {
                   label="Título"
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
+                  errorMessage={titleError?.message}
                 />
 
                 <Select
                   value={time}
                   onChange={(event) => setTime(event.target.value)}
+                  errorMessage={timeError?.message}
                 />
 
                 <Input
@@ -78,6 +115,7 @@ const AddTaskDialog = ({ isOpen, handleClose, handleAddTask }) => {
                   label="Descrição"
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
+                  errorMessage={descriptionError?.message}
                 />
 
                 <div className="flex gap-3">
