@@ -9,15 +9,15 @@ import Button from './Button.jsx'
 const TaskItem = ({ task, handleTaskCheckboxClick, handleTaskDeleteClick }) => {
   const getVariantClass = () => {
     if (task.status === 'in_progress') {
-      return 'bg-[#FFAA04] bg-opacity-10 text-[#FFAA04]'
+      return 'bg-brand-process bg-opacity-10 text-brand-process'
     }
 
     if (task.status === 'done') {
-      return 'bg-[#00ADB5] text-[#00ADB5]'
+      return 'bg-brand-primary text-brand-primary'
     }
 
     if (task.status === 'not_started') {
-      return 'bg-[#35383E] bg-opacity-10 text-[#35383E]'
+      return 'bg-brand-dark-blue bg-opacity-10 text-text-brand-dark-blue'
     }
   }
   return (
@@ -43,7 +43,7 @@ const TaskItem = ({ task, handleTaskCheckboxClick, handleTaskDeleteClick }) => {
       </div>
       <div className="flex items-center gap-2">
         <Button variant="ghost" onClick={() => handleTaskDeleteClick(task.id)}>
-          <TrashIcon className="text-[#9A9C9F]" />
+          <TrashIcon className="text-brand-text-gray" />
         </Button>
         <a href="#" className="transition hover:opacity-75">
           <DetailsIcon />
