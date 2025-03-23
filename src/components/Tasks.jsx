@@ -86,7 +86,7 @@ const Tasks = () => {
         </div>
 
         <div className="items flex gap-3">
-          <Button variant="ghost">
+          <Button color="ghost">
             Limpar tarefa
             <TrashIcon />
           </Button>
