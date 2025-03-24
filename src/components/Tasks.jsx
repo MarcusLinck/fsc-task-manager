@@ -90,14 +90,7 @@ const Tasks = () => {
   //     setTasks(UpdateTasksStatus)
   //   }
 
-  const handleTaskDeleteClick = async (taskId) => {
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-      method: 'DELETE',
-    })
-
-    if (!response.ok) {
-      return toast.error('Erro ao excluir a tarefa. Por favor tente novamente')
-    }
+  const onDeleteTaskSuccess = async (taskId) => {
     const newTask = tasks.filter((task) => task.id !== taskId)
     setTasks(newTask)
     toast.success('Tarefa deletada com sucesso')
@@ -140,7 +133,7 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleTaskCheckboxClick={handleTaskCheckboxClick}
-              handleTaskDeleteClick={handleTaskDeleteClick}
+              onDeleteSuccess={onDeleteTaskSuccess}
             />
           ))}
         </div>
@@ -151,7 +144,7 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleTaskCheckboxClick={handleTaskCheckboxClick}
-              handleTaskDeleteClick={handleTaskDeleteClick}
+              onDeleteSuccess={onDeleteTaskSuccess}
             />
           ))}
         </div>
@@ -162,7 +155,7 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleTaskCheckboxClick={handleTaskCheckboxClick}
-              handleTaskDeleteClick={handleTaskDeleteClick}
+              onDeleteSuccess={onDeleteTaskSuccess}
             />
           ))}
         </div>
