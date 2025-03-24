@@ -36,24 +36,12 @@ const Tasks = () => {
     setAddTaskDialogIsOpen(false)
   }
 
-  const handleAddTask = async (newTask) => {
-    const response = await fetch('http://localhost:3000/tasks', {
-      method: 'POST',
-      body: JSON.stringify(newTask),
-    })
-
-    if (!response.ok) {
-      return toast.error(
-        'Erro ao adicionar a tarefa. Por favor tente novamente'
-      )
-    }
-
+  const addTaskSuccess = async (newTask) => {
     setTasks([...tasks, newTask])
     toast.success('Tarefa adicionada com sucesso!')
   }
 
   const handleTaskCheckboxClick = (taskId) => {
-    console.log('taskId', taskId)
     const newTasks = tasks.map((task) => {
       if (task.id !== taskId) {
         return task
@@ -119,7 +107,7 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={addTaskDialogIsOpen}
             handleClose={handleDialogClose}
-            handleAddTask={handleAddTask}
+            handleAddTaskSuccess={addTaskSuccess}
           />
         </div>
       </div>
