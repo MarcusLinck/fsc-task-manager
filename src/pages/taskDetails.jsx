@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
@@ -16,96 +17,46 @@ import Sidebar from '../components/Sidebar'
 const TaskDetailsPage = () => {
   const { taskId } = useParams()
   const [task, setTask] = useState()
-  const [errors, setError] = useState([])
-  const [updateIsLoading, setUpdateIsLoading] = useState(false)
   const navigate = useNavigate()
-
-  const titleRef = useRef()
-  const descriptionRef = useRef()
-  const timeRef = useRef()
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    reset,
+  } = useForm()
 
   const handleBackClick = () => {
     navigate(-1)
   }
 
   const handleDeleteClick = async () => {
-    setUpdateIsLoading(true)
     const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: 'DELETE',
     })
 
     if (!response.ok) {
-      setUpdateIsLoading(false)
       return toast.error('Erro ao excluir a tarefa. Por favor tente novamente')
     }
 
-    setUpdateIsLoading(false)
     toast.success('Tarefa deletada com sucesso!')
     navigate(-1)
   }
 
-  const updateTask = async () => {
-    const newErrors = []
-
-    const title = titleRef.current.value
-    const time = timeRef.current.value
-    const description = descriptionRef.current.value
-
-    if (!title.trim()) {
-      newErrors.push({
-        inputName: 'title',
-        message: 'O título é obrigatório',
-      })
-    }
-
-    if (!time.trim()) {
-      newErrors.push({
-        inputName: 'time',
-        message: 'O horário é obrigatório',
-      })
-    }
-
-    if (!description.trim()) {
-      newErrors.push({
-        inputName: 'description',
-        message: 'A descrição é obrigatória',
-      })
-    }
-
-    setError(newErrors)
-
-    if (newErrors.length > 0) {
-      return
-    }
-
-    setUpdateIsLoading(true)
+  const updateTask = async (data) => {
     const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: 'PATCH',
-      body: JSON.stringify({
-        title,
-        time,
-        description,
-      }),
+      body: JSON.stringify(data),
     })
 
     if (!response.ok) {
-      setUpdateIsLoading(false)
       return toast.error(
         'Erro ao atualizar a tarefa. Por favor tente novamente'
       )
     }
-    setUpdateIsLoading(false)
 
-    const data = await response.json()
-    console.log(data)
-    setTask(data)
+    const task = await response.json()
+    setTask(task)
   }
-
-  const titleError = errors.find((error) => error.inputName === 'title')
-  const descriptionError = errors.find(
-    (error) => error.inputName === 'description'
-  )
-  const timeError = errors.find((error) => error.inputName === 'time')
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -115,9 +66,10 @@ const TaskDetailsPage = () => {
       const data = await response.json()
       console.log(data)
       setTask(data)
+      reset(data)
     }
     fetchTask()
-  }, [taskId])
+  }, [taskId, reset])
 
   return (
     <div className="flex">
@@ -157,26 +109,32 @@ const TaskDetailsPage = () => {
           </Button>
         </div>
 
-        <div>
+        <form onSubmit={handleSubmit(updateTask)}>
           {/* dados da tarefa */}
           <div className="space-y-6 rounded-xl bg-brand-white p-6">
             <div>
               <Input
                 id="title"
                 label="Título"
-                defaultValue={task?.title}
-                ref={titleRef}
-                errorMessage={titleError?.message}
-                disabled={updateIsLoading}
+                {...register('title', {
+                  required: 'O título é obrigatório',
+                  validate: (value) => {
+                    if (!value.trim()) {
+                      return 'O título não pode ser vazio'
+                    }
+                    return true
+                  },
+                })}
+                errorMessage={errors?.title?.message}
               />
             </div>
 
             <div>
               <Select
-                defaultValue={task?.time}
-                ref={timeRef}
-                errorMessage={timeError?.message}
-                disabled={updateIsLoading}
+                {...register('time', {
+                  required: 'O horário é obrigatório',
+                })}
+                errorMessage={errors?.time?.message}
               />
             </div>
 
@@ -184,28 +142,29 @@ const TaskDetailsPage = () => {
               <Input
                 id="description"
                 label="Descrição"
-                defaultValue={task?.description}
-                ref={descriptionRef}
-                errorMessage={descriptionError?.message}
-                disabled={updateIsLoading}
+                {...register('description', {
+                  required: 'A descrição é obrigatório',
+                  validate: (value) => {
+                    if (!value.trim()) {
+                      return 'A descrição não pode ser vazia'
+                    }
+                    return true
+                  },
+                })}
+                errorMessage={errors?.description?.message}
               />
             </div>
           </div>
           {/* botão de salvar */}
           <div className="flex w-full justify-end gap-3">
-            <Button
-              size="large"
-              color="primary"
-              onClick={updateTask}
-              disabled={updateIsLoading}
-            >
-              {updateIsLoading && (
+            <Button size="large" color="primary" type="submit">
+              {isSubmitting && (
                 <LoaderIcon className="animate-spin text-brand-white" />
               )}
               Salvar
             </Button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   )
