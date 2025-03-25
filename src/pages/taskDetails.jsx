@@ -28,6 +28,22 @@ const TaskDetailsPage = () => {
     navigate(-1)
   }
 
+  const handleDeleteClick = async () => {
+    setUpdateIsLoading(true)
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      setUpdateIsLoading(false)
+      return toast.error('Erro ao excluir a tarefa. Por favor tente novamente')
+    }
+
+    setUpdateIsLoading(false)
+    toast.success('Tarefa deletada com sucesso!')
+    navigate(-1)
+  }
+
   const updateTask = async () => {
     const newErrors = []
 
@@ -131,7 +147,11 @@ const TaskDetailsPage = () => {
           </div>
 
           {/* parte da direita */}
-          <Button className="h-fit self-end" color="danger">
+          <Button
+            className="h-fit self-end"
+            color="danger"
+            onClick={handleDeleteClick}
+          >
             <TrashIcon />
             Deletar tarefa
           </Button>

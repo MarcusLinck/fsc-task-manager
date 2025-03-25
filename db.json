@@ -8,13 +8,6 @@
       "status": "done"
     },
     {
-      "title": "agua mineral",
-      "time": "morning",
-      "description": "com gas",
-      "status": "not_started",
-      "id": "2"
-    },
-    {
       "id": "3",
       "title": "Treinar",
       "description": "Fazer academia",
@@ -34,20 +27,6 @@
       "description": "Programar gerenciador de tarefas",
       "time": "evening",
       "status": "done"
-    },
-    {
-      "id": "0f79",
-      "title": "jogar bola",
-      "time": "evening",
-      "description": "fefwefwefwefwe",
-      "status": "not_started"
-    },
-    {
-      "id": "0594",
-      "title": "lontra",
-      "time": "morning",
-      "description": "do oceano",
-      "status": "not_started"
     },
     {
       "id": "4afe",
