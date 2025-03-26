@@ -2,66 +2,17 @@
   "tasks": [
     {
       "id": "1",
-      "title": "Estudar",
-      "description": "Estudar para prova",
+      "title": "calabresa",
+      "description": "Estudar para provaggg",
       "time": "morning",
       "status": "done"
-    },
-    {
-      "id": "3",
-      "title": "Treinar",
-      "description": "Fazer academia",
-      "time": "afternoon",
-      "status": "in_progress"
     },
     {
       "id": "4",
-      "title": "Cozinharttttyyyy",
+      "title": "bazinga",
       "description": "Cozinhar janta do papai noelgggyy",
       "time": "morning",
       "status": "done"
-    },
-    {
-      "id": "4afe",
-      "title": "gregerg",
-      "time": "morning",
-      "description": "ergerger",
-      "status": "not_started"
-    },
-    {
-      "id": "70b7",
-      "title": "novo teste",
-      "time": "morning",
-      "description": "lalala",
-      "status": "not_started"
-    },
-    {
-      "id": "1c71",
-      "title": "bazinga",
-      "time": "afternoon",
-      "description": "banzinguero",
-      "status": "not_started"
-    },
-    {
-      "id": "cecf",
-      "title": "lerdo",
-      "time": "morning",
-      "description": "morcego",
-      "status": "not_started"
-    },
-    {
-      "id": "b09e",
-      "title": "ytjytjytj",
-      "time": "evening",
-      "description": "ytjtjyjy",
-      "status": "not_started"
-    },
-    {
-      "id": "6303",
-      "title": "                                                  wevwewewewewef",
-      "time": "evening",
-      "description": "wewefwecwefwe",
-      "status": "not_started"
     }
   ]
 }

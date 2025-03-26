@@ -1,5 +1,6 @@
 import './AddTaskDialog.css'
 
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { useRef } from 'react'
 import { createPortal } from 'react-dom'
@@ -13,13 +14,31 @@ import Button from './Button.jsx'
 import Input from './Input.jsx'
 import Select from './Select.jsx'
 
-const AddTaskDialog = ({ isOpen, handleClose, handleAddTaskSuccess }) => {
+const AddTaskDialog = ({ isOpen, handleClose }) => {
   const {
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
     reset,
   } = useForm()
+
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation({
+    mutationKey: 'addTask',
+    mutationFn: async (newTask) => {
+      const response = await fetch('http://localhost:3000/tasks', {
+        method: 'POST',
+        body: JSON.stringify(newTask),
+      })
+      if (!response.ok) {
+        return toast.error(
+          'Erro ao adicionar a tarefa. Por favor tente novamente'
+        )
+      }
+      return response.json
+    },
+  })
 
   const nodeRef = useRef()
 
@@ -32,19 +51,18 @@ const AddTaskDialog = ({ isOpen, handleClose, handleAddTaskSuccess }) => {
       status: 'not_started',
     }
 
-    const response = await fetch('http://localhost:3000/tasks', {
-      method: 'POST',
-      body: JSON.stringify(newTask),
+    mutate(newTask, {
+      onSuccess: () => {
+        queryClient.setQueryData('tasks', (currentTasks) => {
+          return [...currentTasks, newTask]
+        })
+        reset()
+        handleClose()
+      },
+      onError: () => {
+        toast.error('Erro ao adicionar a tarefa. Por favor tente novamente')
+      },
     })
-
-    if (!response.ok) {
-      return toast.error(
-        'Erro ao adicionar a tarefa. Por favor tente novamente'
-      )
-    }
-    handleAddTaskSuccess(newTask)
-    reset()
-    handleClose()
   }
 
   return (
@@ -141,6 +159,5 @@ const AddTaskDialog = ({ isOpen, handleClose, handleAddTaskSuccess }) => {
 AddTaskDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  handleAddTaskSuccess: PropTypes.func.isRequired,
 }
 export default AddTaskDialog
