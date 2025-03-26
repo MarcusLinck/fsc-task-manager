@@ -1,9 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { useForm } from 'react-hook-form'
 
-export const useGetTask = (taskId) => {
-  console.log('entrei', taskId)
-  const { reset } = useForm()
+export const useGetTask = ({ taskId, onSuccess }) => {
   return useQuery({
     queryKey: ['task', taskId],
     queryFn: async () => {
@@ -11,7 +8,8 @@ export const useGetTask = (taskId) => {
         method: 'GET',
       })
       const data = await response.json()
-      reset(data)
+      onSuccess(data)
+      return data
     },
   })
 }

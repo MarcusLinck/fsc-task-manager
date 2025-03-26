@@ -23,13 +23,17 @@ const TaskDetailsPage = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm()
 
   const handleBackClick = () => {
     navigate(-1)
   }
 
-  const { data: task } = useGetTask(taskId)
+  const { data: task } = useGetTask({
+    taskId,
+    onSuccess: (task) => reset(task),
+  })
 
   const { mutate: deleteTask, isPending: deleteTaskIsLoading } =
     useDeleteTask(taskId)
