@@ -1,4 +1,3 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -13,6 +12,9 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import Select from '../components/Select'
 import Sidebar from '../components/Sidebar'
+import { useDeleteTask } from '../hooks/data/use-delete-task'
+import { useGetTask } from '../hooks/data/use-get-task'
+import { useUpdateTask } from '../hooks/data/use-update-task'
 
 const TaskDetailsPage = () => {
   const { taskId } = useParams()
@@ -21,70 +23,19 @@ const TaskDetailsPage = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm()
 
   const handleBackClick = () => {
     navigate(-1)
   }
 
-  const queryClient = useQueryClient()
+  const { data: task } = useGetTask(taskId)
 
-  const { data: task } = useQuery({
-    queryKey: ['task', taskId],
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'GET',
-      })
-      const data = await response.json()
-      reset(data)
-    },
-  })
-
-  const { mutate: deleteTask, isPending: deleteTaskIsLoading } = useMutation({
-    mutationKey: 'deleteById',
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) {
-        return toast.error(
-          'Erro ao deletar a tarefa. Por favor tente novamente'
-        )
-      }
-      const deletedTask = await response.json()
-      queryClient.setQueryData('tasks', (oldTasks) => {
-        return oldTasks.filter((oldTask) => oldTask.id !== deletedTask.id)
-      })
-    },
-  })
+  const { mutate: deleteTask, isPending: deleteTaskIsLoading } =
+    useDeleteTask(taskId)
 
   const { mutate: updateTaskById, isPending: updateTaskIsLoading } =
-    useMutation({
-      mutationKey: 'updateTaskById',
-      mutationFn: async (data) => {
-        const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-          method: 'PATCH',
-          body: JSON.stringify(data),
-        })
-
-        if (!response.ok) {
-          return toast.error(
-            'Erro ao atualizar a tarefa. Por favor tente novamente'
-          )
-        }
-        const updateTask = await response.json()
-
-        queryClient.setQueryData('tasks', (oldTasks) => {
-          return oldTasks.map((oldTask) => {
-            if (oldTask.id === taskId) {
-              return updateTask
-            }
-            return oldTask
-          })
-        })
-      },
-    })
+    useUpdateTask(taskId)
 
   const handleDeleteClick = async () => {
     deleteTask(task, {
