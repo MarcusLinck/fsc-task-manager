@@ -4,7 +4,7 @@ import { forwardRef } from 'react'
 import InputErrorMessage from './InputErrorMessage'
 import InputLabel from './InputLabel.jsx'
 
-const Input = forwardRef(({ label, errorMessage, ...rest }, ref) => {
+const Input = forwardRef(({ label, errormessage, ...rest }, ref) => {
   return (
     <div className="flex flex-col space-y-1 text-left">
       <InputLabel htmlFor={rest.id}>{label}</InputLabel>
@@ -13,7 +13,7 @@ const Input = forwardRef(({ label, errorMessage, ...rest }, ref) => {
         ref={ref}
         {...rest}
       />
-      {errorMessage && <InputErrorMessage>{errorMessage}</InputErrorMessage>}
+      {errormessage && <InputErrorMessage>{errormessage}</InputErrorMessage>}
     </div>
   )
 })
@@ -22,7 +22,7 @@ Input.displayName = 'Input'
 Input.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  errorMessage: PropTypes.string,
+  errormessage: PropTypes.string,
   placeholder: PropTypes.string,
 }
 export default Input

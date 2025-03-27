@@ -119,7 +119,7 @@ const TaskDetailsPage = () => {
                     return true
                   },
                 })}
-                errorMessage={errors?.title?.message}
+                errormessage={errors?.title?.message}
               />
             </div>
 
@@ -128,7 +128,7 @@ const TaskDetailsPage = () => {
                 {...register('time', {
                   required: 'O horário é obrigatório',
                 })}
-                errorMessage={errors?.time?.message}
+                errormessage={errors?.time?.message}
               />
             </div>
 
@@ -145,7 +145,7 @@ const TaskDetailsPage = () => {
                     return true
                   },
                 })}
-                errorMessage={errors?.description?.message}
+                errormessage={errors?.description?.message}
               />
             </div>
           </div>

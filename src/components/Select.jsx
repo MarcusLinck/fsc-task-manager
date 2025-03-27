@@ -11,7 +11,7 @@ const Select = forwardRef((props, ref) => {
 
       <select
         id="time"
-        className="border-brand-border outline-brand-primary placeholder:text-brand-text-gray rounded-lg border border-solid px-4 py-3 placeholder:text-sm"
+        className="rounded-lg border border-solid border-brand-border px-4 py-3 outline-brand-primary placeholder:text-sm placeholder:text-brand-text-gray"
         {...props}
         ref={ref}
       >
@@ -20,8 +20,8 @@ const Select = forwardRef((props, ref) => {
         <option value="evening">Noite</option>
       </select>
 
-      {props.errorMessage && (
-        <InputErrorMessage>{props.errorMessage}</InputErrorMessage>
+      {props.errormessage && (
+        <InputErrorMessage>{props.errormessage}</InputErrorMessage>
       )}
     </div>
   )
@@ -29,6 +29,6 @@ const Select = forwardRef((props, ref) => {
 
 Select.displayName = 'TimeSelect'
 Select.propTypes = {
-  errorMessage: PropTypes.string,
+  errormessage: PropTypes.string,
 }
 export default Select

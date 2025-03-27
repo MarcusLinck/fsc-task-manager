@@ -75,7 +75,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
                   id="title"
                   placeholder="Insira o título da tarefa"
                   label="Título"
-                  errorMessage={errors?.title?.message}
+                  errormessage={errors?.title?.message}
                   {...register('title', {
                     required: 'O título é obrigatório',
                     validate: (value) => {
@@ -88,7 +88,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
                 />
 
                 <Select
-                  errorMessage={errors?.time?.message}
+                  errormessage={errors?.time?.message}
                   {...register('time', {
                     required: 'O horário é obrigatório',
                   })}
@@ -98,7 +98,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
                   id="description"
                   placeholder="Descreva a tarefa"
                   label="Descrição"
-                  errorMessage={errors?.description?.message}
+                  errormessage={errors?.description?.message}
                   {...register('description', {
                     required: 'A descrição é obrigatório',
                     validate: (value) => {

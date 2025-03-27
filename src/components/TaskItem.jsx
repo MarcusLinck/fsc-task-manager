@@ -111,7 +111,5 @@ TaskItem.propTypes = {
     time: PropTypes.oneOf(['morning', 'afternoon', 'evening']).isRequired,
     status: PropTypes.oneOf(['not_started', 'in_progress', 'done']).isRequired,
   }).isRequired,
-  handleTaskCheckboxClick: PropTypes.func.isRequired,
-  handleTaskDeleteClick: PropTypes.func.isRequired,
 }
 export default TaskItem
