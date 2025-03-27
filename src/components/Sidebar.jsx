@@ -4,7 +4,7 @@ import { HomeIcon, TasksIcon } from '../assets/icons/index.js'
 import SidebarButton from './SidebarButton.jsx'
 const Sidebar = () => {
   return (
-    <div className="h-screen w-72 bg-white">
+    <div className="h-screen w-72 min-w-72 bg-white">
       <div className="space-y-4 px-8 py-6">
         <h1 className="text-xl font-semibold text-brand-primary">
           Task Manager
@@ -22,10 +22,12 @@ const Sidebar = () => {
             Início
           </SidebarButton>
         </Link>
-        <SidebarButton color="selected">
-          <TasksIcon />
-          Minhas Tarefas
-        </SidebarButton>
+        <Link to="/tasks">
+          <SidebarButton color="selected">
+            <TasksIcon />
+            Minhas Tarefas
+          </SidebarButton>
+        </Link>
       </div>
     </div>
   )
